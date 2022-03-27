@@ -115,9 +115,17 @@ public class SwingWorker {
 
 	public void displayBoard (boolean[][] board) {
 		//will be implemented later once graphics are completed
+		for (int r = 0; r <= 7; r++) {
+			for (int c = 0; c <= 7; c++) {
+				if (board[r][c] == true)
+					System.out.print("Q");
+				else
+					System.out.print(" ");
+			}
+			System.out.println();
+		}
+		System.out.println("\n");
 	}
-
-
 
 	public static void main(String[] args) {
 //		new SwingWorker();
