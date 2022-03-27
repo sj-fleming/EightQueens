@@ -48,13 +48,15 @@ public class SwingWorker {
 				displayBoard(currentBoard);
 				//set the last queen placed to false
 			}
-			removeQueen(currentBoard, row--);
-			removeQueen(currentBoard, row-2);
+			col = removeQueen(currentBoard, row--);
+			currentBoard[row][col] = false;
+			col = removeQueen(currentBoard, row-2);
+			currentBoard[row][col] = false;
 			placeQueens (currentBoard, row-2, col, numQueens--);
 			return;
 		}
 		for (int i = 0; i <= 7; i++) {
-			if (isSafe (currentBoard, row, i) && i != col) {
+			if (isSafe (currentBoard, row, i) && (i != col || col + row == 0)) {
 				currentBoard[row] [i] = true;
 				displayBoard(currentBoard);
 				row++;
@@ -66,8 +68,13 @@ public class SwingWorker {
 		System.out.println("backtracking: " + row);
 		displayBoard(currentBoard);
 		row--;
-		System.out.println("calling remove queen: " + row);
-		currentBoard = removeQueen(currentBoard, row);
+		System.out.println("calling remove queen from row: " + row + " and column: " + col);
+		col = removeQueen(currentBoard, row);
+		currentBoard[row][col] = false;
+		if(col == 7) {
+			row--;
+			col = removeQueen(currentBoard, row);
+		}
 		placeQueens (currentBoard, row--, col, numQueens--);	
 	}
 
@@ -75,7 +82,7 @@ public class SwingWorker {
 		System.out.println("testing row: " + row);
 		System.out.println("testing col: " + col);
 		//checks column
-		for(int r = 0; r < 7; r++) {
+		for(int r = 0; r <= 7; r++) {
 			if(currentBoard[r][col] == true) {
 				System.out.println("same column: " + col);
 				return false;
@@ -137,16 +144,18 @@ public class SwingWorker {
 		return true;
 	}
 	
-	public static boolean[][] removeQueen (boolean[][] board, int row) {
+	public static int removeQueen (boolean[][] board, int row) {
 		for (int i = 0; i <= 7; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
+				return i;
 				//return board;
 			}
 		}
-		System.out.println("queen removed: " + row);
-		displayBoard(board);
-		return board;
+		return 0;
+//		System.out.println("queen removed: " + row);
+//		displayBoard(board);
+//		return board;
 	}
 
 	public static void displayBoard (boolean[][] board) {
