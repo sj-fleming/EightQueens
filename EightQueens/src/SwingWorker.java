@@ -50,21 +50,25 @@ public class SwingWorker {
 			}
 			removeQueen(currentBoard, row--);
 			removeQueen(currentBoard, row-2);
-			placeQueens (currentBoard, row-2, 0, numQueens--);
+			placeQueens (currentBoard, row-2, col, numQueens--);
+			return;
 		}
 		for (int i = 0; i <= 7; i++) {
-			if (isSafe (currentBoard, row, i)) {
+			if (isSafe (currentBoard, row, i) && i != col) {
 				currentBoard[row] [i] = true;
 				displayBoard(currentBoard);
 				row++;
-				placeQueens (currentBoard, row, 0, numQueens++);
+				placeQueens (currentBoard, row, i, numQueens++);
+				return;
 			}	
 		}
 		//if none of the spaces in the row can be filled, backtrack and move previous piece
-		System.out.println("backtracking");
+		System.out.println("backtracking: " + row);
 		displayBoard(currentBoard);
-		currentBoard = removeQueen(currentBoard, row--);
-		placeQueens (currentBoard, row--, 0, numQueens--);	
+		row--;
+		System.out.println("calling remove queen: " + row);
+		currentBoard = removeQueen(currentBoard, row);
+		placeQueens (currentBoard, row--, col, numQueens--);	
 	}
 
 	public static boolean isSafe (boolean[][] currentBoard, int row, int col) {
@@ -134,12 +138,14 @@ public class SwingWorker {
 	}
 	
 	public static boolean[][] removeQueen (boolean[][] board, int row) {
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i <= 7; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
-				return board;
+				//return board;
 			}
 		}
+		System.out.println("queen removed: " + row);
+		displayBoard(board);
 		return board;
 	}
 
