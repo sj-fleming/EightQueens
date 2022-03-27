@@ -39,47 +39,68 @@ public class SwingWorker {
 //		worker.execute();
 //	}
 
-	public static void placeQueens (boolean[][] currentBoard, int row, int column, int numQueens) {
+	public static void placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
 		//base cases
-		if (row > 7 || column > 7) {
+		System.out.println("row: " + row);
+		System.out.println("col: " + col);
+		if (row > 7) {
 			if (numQueens == 8) {
 				displayBoard(currentBoard);
 				//set the last queen placed to false
 			}
 			removeQueen(currentBoard, row--);
-			placeQueens (currentBoard, row--, 0, numQueens--);
+			removeQueen(currentBoard, row-2);
+			placeQueens (currentBoard, row-2, 0, numQueens--);
 		}
 		for (int i = 0; i <= 7; i++) {
 			if (isSafe (currentBoard, row, i)) {
 				currentBoard[row] [i] = true;
-				placeQueens (currentBoard, row++, 0, numQueens++);
+				displayBoard(currentBoard);
+				row++;
+				placeQueens (currentBoard, row, 0, numQueens++);
 			}	
 		}
 		//if none of the spaces in the row can be filled, backtrack and move previous piece
-		removeQueen(currentBoard, row--);
+		System.out.println("backtracking");
+		displayBoard(currentBoard);
+		currentBoard = removeQueen(currentBoard, row--);
 		placeQueens (currentBoard, row--, 0, numQueens--);	
 	}
 
 	public static boolean isSafe (boolean[][] currentBoard, int row, int col) {
+		System.out.println("testing row: " + row);
+		System.out.println("testing col: " + col);
 		//checks column
 		for(int r = 0; r < 7; r++) {
-			if(currentBoard[r][col] == true)
+			if(currentBoard[r][col] == true) {
+				System.out.println("same column: " + col);
 				return false;
+			}
 		}
 		//checks diagonal
 		int r = row;
 		int c = col;
 		while(r <= 7 && c <= 7) {
-			if (currentBoard[r][c] == true)
+			if (currentBoard[r][c] == true) {
+				System.out.println("diagonal 1: " + r + c);
 				return false;
+			}
 			r++;
 			c++;
 		}
-		r = 7 - c;
-		c = 0;
+		if (r > c) {
+			r = r - c;
+			c = 0;
+		}
+		else {
+			c = c - r;
+			r = 0;
+		}
 		while(r < row && c < col) {
-			if (currentBoard[r][c] == true)
+			if (currentBoard[r][c] == true) {
+				System.out.println("diagonal 2: " + r + c);
 				return false;
+			}
 			r++;
 			c++;
 		}
@@ -87,30 +108,39 @@ public class SwingWorker {
 		int r2 = row;
 		int c2 = col;
 		while(r2 <= 7 && c2 >= 0) {
-			if (currentBoard[r2][c2] == true)
+			if (currentBoard[r2][c2] == true) {
+				System.out.println("diagonal 3: " + r2 + c2);
 				return false;
+			}
 			r2++;
 			c2--;
 		}
-		int temp = r2;
-		r2 = c2;
+		//System.out.println("c2: " + c2);
+		//System.out.println("r2: " + r2);
+		int temp = r2-1;
+		r2 = c2+1;
 		c2 = temp;
+		//System.out.println("row: " + r2);
+		//System.out.println("col: " + c2);
 		while(r2 <= row && c2 >= col) {
-			if (currentBoard[r2][c2] == true)
+			if (currentBoard[r2][c2] == true) {
+				System.out.println("diagonal 4: " + r2 + c2);
 				return false;
+			}
 			r2++;
 			c2--;
 		}
 		return true;
 	}
 	
-	public static void removeQueen (boolean[][] board, int row) {
+	public static boolean[][] removeQueen (boolean[][] board, int row) {
 		for (int i = 0; i < 7; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
-				return;
+				return board;
 			}
-		}	
+		}
+		return board;
 	}
 
 	public static void displayBoard (boolean[][] board) {
@@ -118,9 +148,9 @@ public class SwingWorker {
 		for (int r = 0; r <= 7; r++) {
 			for (int c = 0; c <= 7; c++) {
 				if (board[r][c] == true)
-					System.out.print("Q");
+					System.out.print("Q ");
 				else
-					System.out.print(" ");
+					System.out.print("X ");
 			}
 			System.out.println();
 		}
