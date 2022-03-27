@@ -39,7 +39,7 @@ public class SwingWorker {
 //		worker.execute();
 //	}
 
-	public void placeQueens (boolean[][] currentBoard, int row, int column, int numQueens) {
+	public static void placeQueens (boolean[][] currentBoard, int row, int column, int numQueens) {
 		//base cases
 		if (row > 7 || column > 7) {
 			if (numQueens == 8) {
@@ -60,7 +60,7 @@ public class SwingWorker {
 		placeQueens (currentBoard, row--, 0, numQueens--);	
 	}
 
-	public boolean isSafe (boolean[][] currentBoard, int row, int col) {
+	public static boolean isSafe (boolean[][] currentBoard, int row, int col) {
 		//checks column
 		for(int r = 0; r < 7; r++) {
 			if(currentBoard[r][col] == true)
@@ -104,7 +104,7 @@ public class SwingWorker {
 		return true;
 	}
 	
-	public void removeQueen (boolean[][] board, int row) {
+	public static void removeQueen (boolean[][] board, int row) {
 		for (int i = 0; i < 7; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
@@ -113,7 +113,7 @@ public class SwingWorker {
 		}	
 	}
 
-	public void displayBoard (boolean[][] board) {
+	public static void displayBoard (boolean[][] board) {
 		//will be implemented later once graphics are completed
 		for (int r = 0; r <= 7; r++) {
 			for (int c = 0; c <= 7; c++) {
@@ -129,5 +129,7 @@ public class SwingWorker {
 
 	public static void main(String[] args) {
 //		new SwingWorker();
+		boolean[][] chessBoard = new boolean[8][8];
+		placeQueens(chessBoard, 0, 0, 0);
 	}
 }
