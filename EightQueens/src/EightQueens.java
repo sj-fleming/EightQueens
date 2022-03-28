@@ -5,6 +5,9 @@
 public class EightQueens {
 	
 	public static int numSolutions = 0;
+	public static ChessSquarePanel c;
+	private static final int ROWS = 8;
+	private static final int COLS = 8;
 
 //	public SwingWorker() {
 //
@@ -48,7 +51,7 @@ public class EightQueens {
 		if (row < 0)
 			return false;
 //		if (row > 7) {
-			if (numQueens == 8) {
+			if (numQueens == ROWS) {
 				displayBoard(currentBoard);	
 				numSolutions++;
 				return true;
@@ -67,7 +70,7 @@ public class EightQueens {
 //			placeQueens (currentBoard, row-2, col, numQueens);
 //			return false;
 //		}
-		for (int i = col; i <= 7; i++) {
+		for (int i = col; i < COLS; i++) {
 			if (isSafe (currentBoard, row, i)) {
 				currentBoard[row] [i] = true;
 			//	row++;
@@ -88,7 +91,7 @@ public class EightQueens {
 		currentBoard[row][col] = false; //not working properly?
 		numQueens--;
 //		System.out.println("calling remove queen from row: " + row + " and column: " + col);
-		while (col == 7) {
+		while (col == COLS-1) {
 			row--;
 			col = removeQueen(currentBoard, row);
 			if (col == -1)
@@ -176,7 +179,7 @@ public class EightQueens {
 	public static int removeQueen (boolean[][] board, int row) {
 		if (row < 0)
 			return -1;
-		for (int i = 0; i <= 7; i++) {
+		for (int i = 0; i < COLS; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
 				return i;
@@ -191,21 +194,29 @@ public class EightQueens {
 
 	public static void displayBoard (boolean[][] board) {
 		//will be implemented later once graphics are completed
-		for (int r = 0; r <= 7; r++) {
-			for (int c = 0; c <= 7; c++) {
+		ChessSpace[][] graphicsBoard = c.getBoard();
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLS; c++) {
 				if (board[r][c] == true)
-					System.out.print("Q ");
+					graphicsBoard[r][c].showQueen(true);
 				else
-					System.out.print("X ");
+					graphicsBoard[r][c].showQueen(false);
 			}
-			System.out.println();
+//			System.out.println();
 		}
-		System.out.println("\n");
+//		System.out.println("\n");
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
+		c = new ChessSquarePanel();
 //		new SwingWorker();
-		boolean[][] chessBoard = new boolean[8][8];
+		boolean[][] chessBoard = new boolean[ROWS][COLS];
 		placeQueens(chessBoard, 0, 0, 0);
 		System.out.println("Solutions found: " + numSolutions);
 	}

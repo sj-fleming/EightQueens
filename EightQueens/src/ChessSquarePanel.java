@@ -18,6 +18,7 @@ public class ChessSquarePanel extends JPanel {
 	private final static Color PRIMARY = Color.RED, ALTERNATE  = Color.BLACK;
 	private static int ROWS = 8;
 	private static int COLS = 8;
+	public static ChessSpace[][] board;
 	
 	public ChessSquarePanel() {
 		super();
@@ -31,18 +32,16 @@ public class ChessSquarePanel extends JPanel {
 	
 	private void setupPanel() {
 		setLayout(new GridLayout(ROWS, COLS, 5, 5));
+		board = new ChessSpace[ROWS][COLS];
 		Color currentColor = PRIMARY;
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLS; c++) {
-				//add(new MyPanel(currentColor, 64, 64));	
-				add(new ChessSpace(currentColor));
+				ChessSpace space = new ChessSpace(currentColor);
+				add(space);
+				board[r][c] = space;
 				currentColor = swapColor(currentColor, PRIMARY, ALTERNATE);
 			}
 			currentColor = swapColor(currentColor, PRIMARY, ALTERNATE);
-//			if (currentColor.equals(PRIMARY))
-//				currentColor = ALTERNATE;
-//			else
-//				currentColor = PRIMARY;
 		}
 	}
 	
@@ -71,7 +70,7 @@ public class ChessSquarePanel extends JPanel {
 	private void createSidePanels(JFrame f) {
 		f.add(createButton("Hello"), BorderLayout.PAGE_START);
 		//f.add(new MyPanel(Color.GREEN, 600, 20), BorderLayout.PAGE_START);
-		f.add(new MyPanel(Color.YELLOW, 20, 20), BorderLayout.LINE_START);
+		//f.add(new MyPanel(Color.YELLOW, 20, 20), BorderLayout.LINE_START);
 	}
 	
 	private JButton createButton(String title) {
@@ -85,5 +84,7 @@ public class ChessSquarePanel extends JPanel {
 		return button;
 	}
 	
-
+	public ChessSpace[][] getBoard(){
+		return board;
+	}
 }
