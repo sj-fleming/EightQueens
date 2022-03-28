@@ -3,6 +3,8 @@
 //import java.util.ArrayList;
 
 public class EightQueens {
+	
+	public static int numSolutions = 0;
 
 //	public SwingWorker() {
 //
@@ -48,6 +50,7 @@ public class EightQueens {
 //		if (row > 7) {
 			if (numQueens == 8) {
 				displayBoard(currentBoard);	
+				numSolutions++;
 				return true;
 			}
 			//set the last two queens placed to false (might only need to do one?)
@@ -69,9 +72,9 @@ public class EightQueens {
 				currentBoard[row] [i] = true;
 			//	row++;
 				numQueens++;
-				System.out.println("numQueens: " + numQueens);
-				displayBoard(currentBoard);
-				if(!placeQueens (currentBoard, ++row, i, numQueens))
+//				System.out.println("numQueens: " + numQueens);
+				//displayBoard(currentBoard);
+				if(!placeQueens (currentBoard, ++row, 0, numQueens))
 						return false;
 			}	
 		}
@@ -84,7 +87,7 @@ public class EightQueens {
 			return false;
 		currentBoard[row][col] = false; //not working properly?
 		numQueens--;
-		System.out.println("calling remove queen from row: " + row + " and column: " + col);
+//		System.out.println("calling remove queen from row: " + row + " and column: " + col);
 		while (col == 7) {
 			row--;
 			col = removeQueen(currentBoard, row);
@@ -92,7 +95,7 @@ public class EightQueens {
 				return false;
 			currentBoard[row][col] = false;
 			numQueens--;
-			System.out.println("calling remove queen 2 from row: " + row + " and column: " + col);
+//			System.out.println("calling remove queen 2 from row: " + row + " and column: " + col);
 		}
 		if(!placeQueens(currentBoard, row, col+1, numQueens))
 			return false;
@@ -161,7 +164,7 @@ public class EightQueens {
 		//System.out.println("col: " + c2);
 		while(r2 <= row && c2 >= col) {
 			if (currentBoard[r2][c2] == true) {
-				System.out.println("diagonal 4: " + r2 + c2);
+//				System.out.println("diagonal 4: " + r2 + c2);
 				return false;
 			}
 			r2++;
@@ -204,5 +207,6 @@ public class EightQueens {
 //		new SwingWorker();
 		boolean[][] chessBoard = new boolean[8][8];
 		placeQueens(chessBoard, 0, 0, 0);
+		System.out.println("Solutions found: " + numSolutions);
 	}
 }
