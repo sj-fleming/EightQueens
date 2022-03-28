@@ -2,7 +2,7 @@
 //import java.util.List;
 //import java.util.ArrayList;
 
-public class SwingWorker {
+public class EightQueens {
 
 //	public SwingWorker() {
 //
@@ -39,43 +39,69 @@ public class SwingWorker {
 //		worker.execute();
 //	}
 
-	public static void placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
+	public static boolean placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
 		//base cases
 //		System.out.println("row: " + row);
 //		System.out.println("col: " + col);
-		if (row > 7) {
+		if (row < 0)
+			return false;
+//		if (row > 7) {
 			if (numQueens == 8) {
-				displayBoard(currentBoard);			
+				displayBoard(currentBoard);	
+				return true;
 			}
 			//set the last two queens placed to false (might only need to do one?)
-			col = removeQueen(currentBoard, row--);
-			currentBoard[row][col] = false;
-			col = removeQueen(currentBoard, row-2);
-			currentBoard[row][col] = false;
-			placeQueens (currentBoard, row-2, col, numQueens--);
-			return;
-		}
+//			col = removeQueen(currentBoard, row--);
+//			if (col == -1)
+//				return false;
+//			currentBoard[row][col] = false;
+//			numQueens--;
+//			col = removeQueen(currentBoard, row-2);
+//			if (col == -1)
+//				return false;
+//			currentBoard[row][col] = false;
+//			numQueens--;
+//			placeQueens (currentBoard, row-2, col, numQueens);
+//			return false;
+//		}
 		for (int i = col; i <= 7; i++) {
-			if (isSafe (currentBoard, row, i) && (i != col || col + row == 0)) {
+			if (isSafe (currentBoard, row, i)) {
 				currentBoard[row] [i] = true;
-				//displayBoard(currentBoard);
-				row++;
-				placeQueens (currentBoard, row, i, numQueens++);
-				return;
+			//	row++;
+				numQueens++;
+				System.out.println("numQueens: " + numQueens);
+				displayBoard(currentBoard);
+				if(!placeQueens (currentBoard, ++row, i, numQueens))
+						return false;
 			}	
 		}
 		//if none of the spaces in the row can be filled, backtrack and move previous piece
 		//System.out.println("backtracking: " + row);
 		//displayBoard(currentBoard);
 		row--;
-		//System.out.println("calling remove queen from row: " + row + " and column: " + col);
 		col = removeQueen(currentBoard, row);
-		currentBoard[row][col] = false;
-		if(col == 7) {
+		if (col == -1)
+			return false;
+		currentBoard[row][col] = false; //not working properly?
+		numQueens--;
+		System.out.println("calling remove queen from row: " + row + " and column: " + col);
+		while (col == 7) {
 			row--;
 			col = removeQueen(currentBoard, row);
+			if (col == -1)
+				return false;
+			currentBoard[row][col] = false;
+			numQueens--;
+			System.out.println("calling remove queen 2 from row: " + row + " and column: " + col);
 		}
-		placeQueens (currentBoard, row--, col, numQueens--);	
+		if(!placeQueens(currentBoard, row, col+1, numQueens))
+			return false;
+		return false;
+//		if(col == 7) {
+//			row--;
+//			col = removeQueen(currentBoard, row);
+//		}
+//		placeQueens (currentBoard, row--, col, numQueens--);	
 	}
 
 	public static boolean isSafe (boolean[][] currentBoard, int row, int col) {
@@ -145,6 +171,8 @@ public class SwingWorker {
 	}
 	
 	public static int removeQueen (boolean[][] board, int row) {
+		if (row < 0)
+			return -1;
 		for (int i = 0; i <= 7; i++) {
 			if (board[row][i] == true) {
 				board[row][i] = false;
@@ -152,7 +180,7 @@ public class SwingWorker {
 				//return board;
 			}
 		}
-		return 0;
+		return -1;
 //		System.out.println("queen removed: " + row);
 //		displayBoard(board);
 //		return board;
