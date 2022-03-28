@@ -41,13 +41,13 @@ public class SwingWorker {
 
 	public static void placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
 		//base cases
-		System.out.println("row: " + row);
-		System.out.println("col: " + col);
+//		System.out.println("row: " + row);
+//		System.out.println("col: " + col);
 		if (row > 7) {
 			if (numQueens == 8) {
-				displayBoard(currentBoard);
-				//set the last queen placed to false
+				displayBoard(currentBoard);			
 			}
+			//set the last two queens placed to false (might only need to do one?)
 			col = removeQueen(currentBoard, row--);
 			currentBoard[row][col] = false;
 			col = removeQueen(currentBoard, row-2);
@@ -55,20 +55,20 @@ public class SwingWorker {
 			placeQueens (currentBoard, row-2, col, numQueens--);
 			return;
 		}
-		for (int i = 0; i <= 7; i++) {
+		for (int i = col; i <= 7; i++) {
 			if (isSafe (currentBoard, row, i) && (i != col || col + row == 0)) {
 				currentBoard[row] [i] = true;
-				displayBoard(currentBoard);
+				//displayBoard(currentBoard);
 				row++;
 				placeQueens (currentBoard, row, i, numQueens++);
 				return;
 			}	
 		}
 		//if none of the spaces in the row can be filled, backtrack and move previous piece
-		System.out.println("backtracking: " + row);
-		displayBoard(currentBoard);
+		//System.out.println("backtracking: " + row);
+		//displayBoard(currentBoard);
 		row--;
-		System.out.println("calling remove queen from row: " + row + " and column: " + col);
+		//System.out.println("calling remove queen from row: " + row + " and column: " + col);
 		col = removeQueen(currentBoard, row);
 		currentBoard[row][col] = false;
 		if(col == 7) {
@@ -79,12 +79,12 @@ public class SwingWorker {
 	}
 
 	public static boolean isSafe (boolean[][] currentBoard, int row, int col) {
-		System.out.println("testing row: " + row);
-		System.out.println("testing col: " + col);
+		//System.out.println("testing row: " + row);
+		//System.out.println("testing col: " + col);
 		//checks column
 		for(int r = 0; r <= 7; r++) {
 			if(currentBoard[r][col] == true) {
-				System.out.println("same column: " + col);
+//				System.out.println("same column: " + col);
 				return false;
 			}
 		}
@@ -93,7 +93,7 @@ public class SwingWorker {
 		int c = col;
 		while(r <= 7 && c <= 7) {
 			if (currentBoard[r][c] == true) {
-				System.out.println("diagonal 1: " + r + c);
+//				System.out.println("diagonal 1: " + r + c);
 				return false;
 			}
 			r++;
@@ -109,7 +109,7 @@ public class SwingWorker {
 		}
 		while(r < row && c < col) {
 			if (currentBoard[r][c] == true) {
-				System.out.println("diagonal 2: " + r + c);
+//				System.out.println("diagonal 2: " + r + c);
 				return false;
 			}
 			r++;
@@ -120,7 +120,7 @@ public class SwingWorker {
 		int c2 = col;
 		while(r2 <= 7 && c2 >= 0) {
 			if (currentBoard[r2][c2] == true) {
-				System.out.println("diagonal 3: " + r2 + c2);
+//				System.out.println("diagonal 3: " + r2 + c2);
 				return false;
 			}
 			r2++;
