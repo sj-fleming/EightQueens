@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -15,12 +13,30 @@ import java.awt.event.ActionEvent;
  */
 public class ChessSquarePanel extends JPanel {
 	
+	/**
+	 * the two alternating colors used on the chess board
+	 */
 	private final static Color PRIMARY = Color.RED, ALTERNATE  = Color.BLACK;
+	/**
+	 * number of rows on the chess board
+	 */
 	private static int ROWS = 8;
+	/**
+	 * number of columns on the chess board
+	 */
 	private static int COLS = 8;
+	/**
+	 * matrix of ChessSpaces (JPanels) that make up the chess board
+	 */
 	private static ChessSpace[][] board;
+	/**
+	 * button that finds and displays all the solutions when pressed
+	 */
 	private JButton button;
 	
+	/**
+	 * main constructor - creates the JFrame, calls setupPanel, and adds the JPanel and button to the JFrame
+	 */
 	public ChessSquarePanel() {
 		super();
 		JFrame frame = createFrame();
@@ -33,6 +49,9 @@ public class ChessSquarePanel extends JPanel {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * instantiates the matrix of chess spaces and sets their colors to red and black (alternating)
+	 */
 	private void setupPanel() {
 		setLayout(new GridLayout(ROWS, COLS, 5, 5));
 		board = new ChessSpace[ROWS][COLS];
@@ -48,6 +67,13 @@ public class ChessSquarePanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * @param color the color of the previous chess space
+	 * @param first red
+	 * @param second black
+	 * @return the opposite color as was sent in
+	 * switches black to red and red to black
+	 */
 	private Color swapColor(Color color, Color first, Color second) {
 		return color.equals(first) ? second : first;
 //		if (color.equals(first))
@@ -56,41 +82,31 @@ public class ChessSquarePanel extends JPanel {
 //			return first;
 	}
 	
+	/**
+	 * @return the created and instantiated JFrame
+	 * sets default close operation, location, and size of the JFrame
+	 */
 	private JFrame createFrame() {
 		JFrame f = new JFrame("Eight Queens");
-		
-		//add an icon to top left corner
-		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //keeps the jframe open and event listeners listening until Xd
 		f.setLocation(250, 50); // on your monitor screen: x,y
-		f.setSize(800, 600); //width, height
-		
-		//to do: add other things to frame (button that switches to the next solution, text that says how long solutions are taking, letter/number for each row/column, etc)
-		
+		f.setSize(800, 600); //width, height	
+		//possible addition: add other things to frame (button that switches to the next solution, text that says how long solutions are taking, letter/number for each row/column, etc)	
 		return f;
 	}
 	
-//	private void createSidePanels(JFrame f) {
-//		f.add(createButton("Hello"), BorderLayout.PAGE_START);
-//		//f.add(new MyPanel(Color.GREEN, 600, 20), BorderLayout.PAGE_START);
-//		//f.add(new MyPanel(Color.YELLOW, 20, 20), BorderLayout.LINE_START);
-//	}
-//	
-//	private JButton createButton(String title) {
-//		JButton button = new JButton(title);
-//		button.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				System.out.println("I hit the button");
-//			}
-//		});
-//		return button;
-//	}
-	
+	/**
+	 * @return the private field board, matrix of chess spaces
+	 * returns the board
+	 */
 	public ChessSpace[][] getBoard(){
 		return board;
 	}
 	
+	/**
+	 * @return the private field button, a JButton that starts finding the solutions
+	 * returns the JFrame's JButton
+	 */
 	public JButton getButton() {
 		return button;
 	}
