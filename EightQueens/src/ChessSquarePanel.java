@@ -18,8 +18,8 @@ public class ChessSquarePanel extends JPanel {
 	private final static Color PRIMARY = Color.RED, ALTERNATE  = Color.BLACK;
 	private static int ROWS = 8;
 	private static int COLS = 8;
-	public static ChessSpace[][] board;
-	public JButton button;
+	private static ChessSpace[][] board;
+	private JButton button;
 	
 	public ChessSquarePanel() {
 		super();
@@ -89,5 +89,9 @@ public class ChessSquarePanel extends JPanel {
 	
 	public ChessSpace[][] getBoard(){
 		return board;
+	}
+	
+	public JButton getButton() {
+		return button;
 	}
 }
