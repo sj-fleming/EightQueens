@@ -27,7 +27,7 @@ public class ChessSquarePanel extends JPanel {
 		setupPanel();
 //		createSidePanels(frame);
 		frame.add(this, BorderLayout.CENTER);
-		button = new JButton("Next Solution");
+		button = new JButton("Find Solutions");
 		frame.add(button, BorderLayout.PAGE_START);
 		frame.pack();
 		frame.setVisible(true);

@@ -30,7 +30,7 @@ public class EightQueens {
 			protected String doInBackground() {
 				//call placeQueens and then publish if it is a valid board
 				placeQueens(chessBoard, 0, 0, 0);
-				publish(chessBoard);
+//				publish(chessBoard);
 				return null;
 			}
 
@@ -53,7 +53,7 @@ public class EightQueens {
 					if (numQueens == ROWS) {
 						publish(currentBoard);
 						numSolutions++;
-						pause(5000);
+						pause(2000);
 						return true;
 					}
 
