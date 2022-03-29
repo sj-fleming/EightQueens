@@ -9,43 +9,79 @@ import javax.swing.SwingWorker;
 //import java.util.List;
 //import java.util.ArrayList;
 
+/**
+ * @author Sarah Fleming
+ * Eight Queens Assignment 8
+ * EightQueens class - places the eight queens on the board
+ * Last Edited: 3/29/22
+ */
 public class EightQueens {
 	
+	/**
+	 * tracks the number of solutions that have been found
+	 */
 	public  static int numSolutions = 0;
+	/**
+	 * JPanel that holds the chess spaces
+	 */
 	public  static ChessSquarePanel c;
+	/**
+	 * number of rows on the board
+	 */
 	private static final int ROWS = 8;
+	/**
+	 * number of columns on the board
+	 */
 	private static final int COLS = 8;
 
 
-
+	/**
+	 * @param args n/a
+	 * instantiates the chess board boolean matrix and creates a swing worker that finds the solutions and displays them
+	 */
 	public static void main(String[] args) {
 		c = new ChessSquarePanel();
 		boolean[][] chessBoard = new boolean[ROWS][COLS];
 		
 		SwingWorker<String, boolean[][]> worker = new SwingWorker<String, boolean[][]> () {
 
-			@Override // note that the return type matches the SwingWorker first type, 
-			// can be Void (capital V)
-
+			/**
+			 * @return type matches the SwingWorker first type (can be Void)
+			 * calls placeQueens for the first space on chessBoard
+			 */
+			@Override
 			protected String doInBackground() {
 				//call placeQueens and then publish if it is a valid board
 				placeQueens(chessBoard, 0, 0, 0);
-//				publish(chessBoard);
 				return null;
 			}
 
-
-			@Override  // executes on publish, but not for EVERY publish
-			// Note that the List datatype matches the SwingWorker second type
+			/**
+			 * @param board List datatype matches the SwingWorker second type, holds the boolean matrix for queens
+			 * executes on publish, but not every publish
+			 * calls displayBoard, which updates the JFrame
+			 */
+			@Override 
 			protected void process(List<boolean[][]> board) {
 				displayBoard(board.get(board.size() - 1));
 			}
 
-			@Override  // executes when finished
+			/**
+			 * executes when finished, prints the number of solutions found
+			 */
+			@Override
 			protected void done() {
 				System.out.println("Solutions found: " + numSolutions);
 			}
 			
+			/**
+			 * @param currentBoard boolean matrix representing the chess board, space holds true if there is a queen there
+			 * @param row the current empty row that the queen is being placed on
+			 * @param col if there was a queen previously on the row, stores the column where this queen was
+			 * @param numQueens the current number of queens on the board
+			 * @return true if a queen is placed successfully
+			 * recursive method that places 8 queens on a chess board so that none of them can capture another
+			 */
 			public  boolean placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
 				//base cases
 				if (row < 0)
@@ -72,7 +108,7 @@ public class EightQueens {
 				col = removeQueen(currentBoard, row);
 				if (col == -1)
 					return false;
-				currentBoard[row][col] = false; //not working properly?
+				currentBoard[row][col] = false;
 				numQueens--;
 				while (col == COLS-1) {
 					row--;
@@ -87,6 +123,13 @@ public class EightQueens {
 				return false;
 			}
 
+			/**
+			 * @param currentBoard boolean matrix representing the chess board, space holds true if there is a queen there
+			 * @param row row of the space that is being checked
+			 * @param col column of the space that is being checked
+			 * @return true if the space is not in the path of any queen already on the board
+			 * checks to see if there are no queens in the same column or diagonal
+			 */
 			public  boolean isSafe (boolean[][] currentBoard, int row, int col) {
 				//checks column
 				for(int r = 0; r <= 7; r++) {
@@ -142,6 +185,12 @@ public class EightQueens {
 				return true;
 			}
 			
+			/**
+			 * @param board boolean matrix representing the chess board, space holds true if there is a queen there
+			 * @param row the row the queen is being removed from
+			 * @return the column that the queen that was removed was placed in
+			 * sets a queen in the row to false and returns the column it removed from
+			 */
 			public  int removeQueen (boolean[][] board, int row) {
 				if (row < 0)
 					return -1;
@@ -154,6 +203,10 @@ public class EightQueens {
 				return -1;
 			}
 
+			/**
+			 * @param board boolean matrix representation of the chess board
+			 * traverse the boolean matrix and if a space is true, sets the text of the JLabel in the graphics matrix to display a queen
+			 */
 			public  void displayBoard (boolean[][] board) {
 				//will be implemented later once graphics are completed
 				ChessSpace[][] graphicsBoard = c.getBoard();
@@ -165,14 +218,13 @@ public class EightQueens {
 							graphicsBoard[r][c].showQueen(false);
 					}
 				}
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				pause(200);
 			}
 			
+			/**
+			 * @param ms milliseconds that the thread pauses for
+			 * pauses the thread for ms milliseconds
+			 */
 			private void pause(int ms) {
 				try {
 					Thread.sleep(ms);
@@ -186,6 +238,11 @@ public class EightQueens {
 		changeListener(c.getButton(), worker);
 	}
 	
+	/**
+	 * @param button JButton on the ChessSquarePanel
+	 * @param sw the swing worker created in main
+	 * creates a new action listener for the JButton that executes the swing worker when pressed
+	 */
 	private static void changeListener(JButton button, SwingWorker<String, boolean[][]> sw) {
 		button.addActionListener(new ActionListener() {
 		@Override

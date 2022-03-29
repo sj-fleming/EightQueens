@@ -6,10 +6,9 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 
 /**
- * 
  * @author Sarah Fleming
  * Eight Queens Assignment 8
- * Last Edited: 3/17/22
+ * Last Edited: 3/29/22
  */
 public class ChessSquarePanel extends JPanel {
 	
@@ -26,7 +25,7 @@ public class ChessSquarePanel extends JPanel {
 	 */
 	private static int COLS = 8;
 	/**
-	 * matrix of ChessSpaces (JPanels) that make up the chess board
+	 * matrix of ChessSpaces (JLabels) that make up the chess board
 	 */
 	private static ChessSpace[][] board;
 	/**
