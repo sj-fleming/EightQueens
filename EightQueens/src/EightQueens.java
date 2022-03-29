@@ -1,3 +1,8 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.SwingWorker;
+
 //import javax.swing.SwingWorker;
 //import java.util.List;
 //import java.util.ArrayList;
@@ -205,19 +210,50 @@ public class EightQueens {
 //			System.out.println();
 		}
 //		System.out.println("\n");
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(200);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public static void main(String[] args) {
 		c = new ChessSquarePanel();
 //		new SwingWorker();
 		boolean[][] chessBoard = new boolean[ROWS][COLS];
-		placeQueens(chessBoard, 0, 0, 0);
-		System.out.println("Solutions found: " + numSolutions);
+		
+		SwingWorker<String, boolean[][]> worker = new SwingWorker<String, boolean[][]> () {
+
+			@Override // note that the return type matches the SwingWorker first type, 
+			// can be Void (capital V)
+
+			protected String doInBackground() {
+				//call placeQueens and then publish if it is a valid board
+				placeQueens(chessBoard, 0, 0, 0);
+				publish(chessBoard);
+				return null;
+			}
+
+
+			@Override  // executes on publish, but not for EVERY publish
+			// Note that the List datatype matches the SwingWorker second type
+			protected void process(List<boolean[][]> board) {
+				c.button.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						displayBoard(board.get(1));
+					}
+				});
+			}
+
+			@Override  // executes when finished
+			protected void done() {
+				System.out.println("Solutions found: " + numSolutions);
+			}
+
+		};
+		
+		worker.execute();
 	}
 }

@@ -19,13 +19,16 @@ public class ChessSquarePanel extends JPanel {
 	private static int ROWS = 8;
 	private static int COLS = 8;
 	public static ChessSpace[][] board;
+	public JButton button;
 	
 	public ChessSquarePanel() {
 		super();
 		JFrame frame = createFrame();
 		setupPanel();
-		createSidePanels(frame);
+//		createSidePanels(frame);
 		frame.add(this, BorderLayout.CENTER);
+		button = new JButton("Next Solution");
+		frame.add(button, BorderLayout.PAGE_START);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -67,22 +70,22 @@ public class ChessSquarePanel extends JPanel {
 		return f;
 	}
 	
-	private void createSidePanels(JFrame f) {
-		f.add(createButton("Hello"), BorderLayout.PAGE_START);
-		//f.add(new MyPanel(Color.GREEN, 600, 20), BorderLayout.PAGE_START);
-		//f.add(new MyPanel(Color.YELLOW, 20, 20), BorderLayout.LINE_START);
-	}
-	
-	private JButton createButton(String title) {
-		JButton button = new JButton(title);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("I hit the button");
-			}
-		});
-		return button;
-	}
+//	private void createSidePanels(JFrame f) {
+//		f.add(createButton("Hello"), BorderLayout.PAGE_START);
+//		//f.add(new MyPanel(Color.GREEN, 600, 20), BorderLayout.PAGE_START);
+//		//f.add(new MyPanel(Color.YELLOW, 20, 20), BorderLayout.LINE_START);
+//	}
+//	
+//	private JButton createButton(String title) {
+//		JButton button = new JButton(title);
+//		button.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println("I hit the button");
+//			}
+//		});
+//		return button;
+//	}
 	
 	public ChessSpace[][] getBoard(){
 		return board;
