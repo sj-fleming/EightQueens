@@ -67,11 +67,11 @@ public class ChessSquarePanel extends JPanel {
 	}
 	
 	/**
+	 * switches black to red and red to black
 	 * @param color the color of the previous chess space
 	 * @param first red
 	 * @param second black
 	 * @return the opposite color as was sent in
-	 * switches black to red and red to black
 	 */
 	private Color swapColor(Color color, Color first, Color second) {
 		return color.equals(first) ? second : first;
@@ -82,8 +82,8 @@ public class ChessSquarePanel extends JPanel {
 	}
 	
 	/**
-	 * @return the created and instantiated JFrame
 	 * sets default close operation, location, and size of the JFrame
+	 * @return the created and instantiated JFrame
 	 */
 	private JFrame createFrame() {
 		JFrame f = new JFrame("Eight Queens");
@@ -95,16 +95,16 @@ public class ChessSquarePanel extends JPanel {
 	}
 	
 	/**
-	 * @return the private field board, matrix of chess spaces
 	 * returns the board
+	 * @return the private field board, matrix of chess spaces
 	 */
 	public ChessSpace[][] getBoard(){
 		return board;
 	}
 	
 	/**
-	 * @return the private field button, a JButton that starts finding the solutions
 	 * returns the JFrame's JButton
+	 * @return the private field button, a JButton that starts finding the solutions
 	 */
 	public JButton getButton() {
 		return button;

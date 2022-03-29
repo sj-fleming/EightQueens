@@ -36,8 +36,8 @@ public class EightQueens {
 
 
 	/**
-	 * @param args n/a
 	 * instantiates the chess board boolean matrix and creates a swing worker that finds the solutions and displays them
+	 * @param args n/a
 	 */
 	public static void main(String[] args) {
 		c = new ChessSquarePanel();
@@ -46,8 +46,8 @@ public class EightQueens {
 		SwingWorker<String, boolean[][]> worker = new SwingWorker<String, boolean[][]> () {
 
 			/**
-			 * @return type matches the SwingWorker first type (can be Void)
 			 * calls placeQueens for the first space on chessBoard
+			 * @return type matches the SwingWorker first type (can be Void)
 			 */
 			@Override
 			protected String doInBackground() {
@@ -57,9 +57,9 @@ public class EightQueens {
 			}
 
 			/**
-			 * @param board List datatype matches the SwingWorker second type, holds the boolean matrix for queens
 			 * executes on publish, but not every publish
 			 * calls displayBoard, which updates the JFrame
+			 * @param board List datatype matches the SwingWorker second type, holds the boolean matrix for queens
 			 */
 			@Override 
 			protected void process(List<boolean[][]> board) {
@@ -75,12 +75,12 @@ public class EightQueens {
 			}
 			
 			/**
+			 * recursive method that places 8 queens on a chess board so that none of them can capture another
 			 * @param currentBoard boolean matrix representing the chess board, space holds true if there is a queen there
 			 * @param row the current empty row that the queen is being placed on
 			 * @param col if there was a queen previously on the row, stores the column where this queen was
 			 * @param numQueens the current number of queens on the board
 			 * @return true if a queen is placed successfully
-			 * recursive method that places 8 queens on a chess board so that none of them can capture another
 			 */
 			public  boolean placeQueens (boolean[][] currentBoard, int row, int col, int numQueens) {
 				//base cases
@@ -124,11 +124,11 @@ public class EightQueens {
 			}
 
 			/**
+			 * checks to see if there are no queens in the same column or diagonal
 			 * @param currentBoard boolean matrix representing the chess board, space holds true if there is a queen there
 			 * @param row row of the space that is being checked
 			 * @param col column of the space that is being checked
 			 * @return true if the space is not in the path of any queen already on the board
-			 * checks to see if there are no queens in the same column or diagonal
 			 */
 			public  boolean isSafe (boolean[][] currentBoard, int row, int col) {
 				//checks column
@@ -186,10 +186,10 @@ public class EightQueens {
 			}
 			
 			/**
+			 * sets a queen in the row to false and returns the column it removed from
 			 * @param board boolean matrix representing the chess board, space holds true if there is a queen there
 			 * @param row the row the queen is being removed from
 			 * @return the column that the queen that was removed was placed in
-			 * sets a queen in the row to false and returns the column it removed from
 			 */
 			public  int removeQueen (boolean[][] board, int row) {
 				if (row < 0)
@@ -204,8 +204,8 @@ public class EightQueens {
 			}
 
 			/**
-			 * @param board boolean matrix representation of the chess board
 			 * traverse the boolean matrix and if a space is true, sets the text of the JLabel in the graphics matrix to display a queen
+			 * @param board boolean matrix representation of the chess board
 			 */
 			public  void displayBoard (boolean[][] board) {
 				//will be implemented later once graphics are completed
@@ -222,8 +222,8 @@ public class EightQueens {
 			}
 			
 			/**
-			 * @param ms milliseconds that the thread pauses for
 			 * pauses the thread for ms milliseconds
+			 * @param ms milliseconds that the thread pauses for
 			 */
 			private void pause(int ms) {
 				try {
@@ -239,9 +239,9 @@ public class EightQueens {
 	}
 	
 	/**
+	 * creates a new action listener for the JButton that executes the swing worker when pressed
 	 * @param button JButton on the ChessSquarePanel
 	 * @param sw the swing worker created in main
-	 * creates a new action listener for the JButton that executes the swing worker when pressed
 	 */
 	private static void changeListener(JButton button, SwingWorker<String, boolean[][]> sw) {
 		button.addActionListener(new ActionListener() {

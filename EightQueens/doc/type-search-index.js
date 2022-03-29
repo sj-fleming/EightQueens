@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"ChessSpace"},{"p":"<Unnamed>","l":"ChessSquarePanel"},{"p":"<Unnamed>","l":"EightQueens"}];updateSearchResults();

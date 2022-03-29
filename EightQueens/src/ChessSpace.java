@@ -26,8 +26,8 @@ public class ChessSpace extends JLabel{
 	private final static String whiteQueen = "\u2655";
 	
 	/**
-	 * @param color the background color of the chess space
 	 * main constructor that sets the background, font, and size of the chess space
+	 * @param color the background color of the chess space
 	 */
 	public ChessSpace(Color color) {
 		super("", SwingConstants.CENTER);
@@ -38,8 +38,8 @@ public class ChessSpace extends JLabel{
 	}
 	
 	/**
-	 * @param d the dimension of the chess space
 	 * sets the dimensions to preferred, minimum, and maximum size
+	 * @param d the dimension of the chess space
 	 */
 	private void setMySize(Dimension d) {
 		setPreferredSize(d);
@@ -48,8 +48,8 @@ public class ChessSpace extends JLabel{
 	}
 	
 	/**
-	 * @param show true if the space has a queen
 	 * sets the text of the JLabel to the queen if true
+	 * @param show true if the space has a queen
 	 */
 	public void showQueen(boolean show) {
 		if (show)
